@@ -1,7 +1,7 @@
 Requirements:
 -------------------------
 Generic:
-* Verium >=1.0.1
+* BitcoinSubsidium 2.2.2
 * Python >=2.6
 * Twisted >=10.0.0
 * python-argparse (for Python =2.6)

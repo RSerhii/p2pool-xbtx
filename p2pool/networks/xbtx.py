@@ -6,22 +6,19 @@ from p2pool.bitcoin import networks
 # REAL_CHAIN_LENGTH must be changed in sync with all other clients
 # changes can be done by changing one, then the other
 
-PARENT = networks.nets['verium']
+PARENT = networks.nets['xbtx']
 SHARE_PERIOD = 60 # seconds
 CHAIN_LENGTH = 24*60 # shares
 REAL_CHAIN_LENGTH = 24*60 # shares
 TARGET_LOOKBEHIND = 200 # shares
 SPREAD = 3 # blocks
 IDENTIFIER = 'e037d5b8c6923610'.decode('hex')
-PREFIX = 'e05775b8c6a6331d'.decode('hex')
-P2P_PORT = 36999
+PREFIX = '58425443'.decode('hex')
+P2P_PORT = 7778
 MIN_TARGET = 0
 MAX_TARGET = 2**(256-8) - 1
 PERSIST = True
-WORKER_PORT = 8336
-BOOTSTRAP_ADDRS = 'emea.p2pool.vericonomy.com amer.p2pool.vericonomy.com apac.p2pool.vericonomy.com'.split(' ')
-ANNOUNCE_CHANNEL = '#p2pool-verium'
-VERSION_CHECK = lambda v: None if 80001 <= v else 'Verium version too old. Upgrade to 1.0.1 or newer!'
-VERSION_WARNING = lambda v: None
-MINIMUM_PROTOCOL_VERSION = 1700
-NEW_MINIMUM_PROTOCOL_VERSION = 1700
+WORKER_PORT = 28336
+BOOTSTRAP_ADDRS = ''
+ANNOUNCE_CHANNEL = '#p2pool-alt'
+VERSION_CHECK=lambda v: v >= 70030
