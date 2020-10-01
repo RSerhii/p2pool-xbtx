@@ -10,15 +10,8 @@ from p2pool.util import deferral, jsonrpc
 @deferral.retry('Error while checking Bitcoin connection:', 1)
 @defer.inlineCallbacks
 def check(bitcoind, net):
-    if not (yield net.PARENT.RPC_CHECK(bitcoind)):
-        print >>sys.stderr, "    Check failed! Make sure that you're connected to the right bitcoind with --bitcoind-rpc-port!"
-        raise deferral.RetrySilentlyException()
-    
-    version_check_result = net.VERSION_CHECK((yield bitcoind.rpc_getinfo())['version'])
-    if version_check_result == True: version_check_result = None # deprecated
-    if version_check_result == False: version_check_result = 'Coin daemon too old! Upgrade!' # deprecated
-    if version_check_result is not None:
-        print >>sys.stderr, '    ' + version_check_result
+    if not net.VERSION_CHECK((yield bitcoind.rpc_getinfo())['version']):
+        print >>sys.stderr, '    Coin daemon too old! Upgrade!'
         raise deferral.RetrySilentlyException()
 
 @deferral.retry('Error getting work from bitcoind:', 3)
