@@ -108,7 +108,7 @@ tx_out_type = pack.ComposedType([
 
 tx_id_type = pack.ComposedType([
     ('version', pack.IntType(32)),
-    ('timestamp', pack.IntType(32)),
+#    ('timestamp', pack.IntType(32)),
     ('tx_ins', pack.ListType(tx_in_type)),
     ('tx_outs', pack.ListType(tx_out_type)),
     ('lock_time', pack.IntType(32))
@@ -139,7 +139,7 @@ block_header_type = pack.ComposedType([
 block_type = pack.ComposedType([
     ('header', block_header_type),
     ('txs', pack.ListType(tx_type)),
-    ('signature', pack.VarStrType())
+#    ('signature', pack.VarStrType())
 ])
 
 stripped_block_type = block_type
