@@ -40,9 +40,9 @@ def getwork(bitcoind, use_getblocktemplate=False):
     transactions = map(bitcoin_data.tx_type.unpack, packed_transactions)
     transaction_hashes = map(bitcoin_data.hash256, packed_transactions)
     txn_timestamp = 0
-    for tx in transactions:
-        if tx['timestamp'] > txn_timestamp:
-            txn_timestamp = tx['timestamp']
+#    for tx in transactions:
+#        if tx['timestamp'] > txn_timestamp:
+#            txn_timestamp = tx['timestamp']
 
     if 'height' not in work:
         work['height'] = (yield bitcoind.rpc_getblock(work['previousblockhash']))['height'] + 1
