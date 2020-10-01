@@ -17,7 +17,7 @@ SUBSIDY_FUNC = lambda height: 1000 # good enough for now
 POW_FUNC = lambda data: pack.IntType(256).unpack(scrypt2.getPoWHash(data))
 BLOCK_PERIOD = 60 # s
 SYMBOL = 'XBTX'
-CONF_FILE_FUNC = lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'bitcoinsubsidium') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/BitcoinSubsidium/') if platform.system() == 'Darwin' else os.path.expanduser('/root/.BitcoinSubsidium'), 'BitcoinSubsidium.conf'),
+CONF_FILE_FUNC = lambda: os.path.join(os.path.join(os.environ['APPDATA'], 'bitcoinsubsidium') if platform.system() == 'Windows' else os.path.expanduser('~/Library/Application Support/BitcoinSubsidium/') if platform.system() == 'Darwin' else os.path.expanduser('/root/.BitcoinSubsidium'), 'BitcoinSubsidium.conf')
 BLOCK_EXPLORER_URL_PREFIX = 'http://144.76.99.135/block/'
 ADDRESS_EXPLORER_URL_PREFIX = 'http://144.76.99.135/address/'
 TX_EXPLORER_URL_PREFIX = 'http://144.76.99.135/tx/'
