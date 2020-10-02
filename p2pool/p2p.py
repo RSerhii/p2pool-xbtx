@@ -143,7 +143,7 @@ class Protocol(p2protocol.Protocol):
         ('start_height', pack.PossiblyNoneType(0, pack.IntType(32))),
         ('relay_txes', pack.PossiblyNoneType(0, pack.IntType(8))),
     ])
-    def handle_version(self, version, services, addr_to, addr_from, nonce, sub_version, mode, best_share_hash):
+    def handle_version(self, version, services, time, addr_to, addr_from, nonce, sub_version, start_height, relay_txes):
         if self.other_version is not None:
             raise PeerMisbehavingError('more than one version message')
         if version < getattr(self.node.net, 'MINIMUM_PROTOCOL_VERSION', 1400):
@@ -184,10 +184,7 @@ class Protocol(p2protocol.Protocol):
             self._stop_thread2 = deferral.run_repeatedly(lambda: [
                 self.sendAdvertisement(),
             random.expovariate(1/(100*len(self.node.peers) + 1))][-1])
-        
-        if best_share_hash is not None:
-            self.node.handle_share_hashes([best_share_hash], self)
-        
+                
         def update_remote_view_of_my_known_txs(before, after):
             added = set(after) - set(before)
             removed = set(before) - set(after)
