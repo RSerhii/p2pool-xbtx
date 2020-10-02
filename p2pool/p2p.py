@@ -140,7 +140,7 @@ class Protocol(p2protocol.Protocol):
         ('addr_from', bitcoin_data.address_type),
         ('nonce', pack.IntType(64)),
         ('sub_version', pack.VarStrType()),
-        ('start_height', pack.PossiblyNoneType(0, pack.IntType(256))),
+        ('start_height', pack.PossiblyNoneType(0, pack.IntType(32))),
         ('relay_txes', pack.PossiblyNoneType(0, pack.IntType(8))),
     ])
     def handle_version(self, version, services, addr_to, addr_from, nonce, sub_version, mode, best_share_hash):
