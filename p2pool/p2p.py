@@ -25,7 +25,7 @@ def fragment(f, **kwargs):
         fragment(f, **dict((k, v[len(v)//2:]) for k, v in kwargs.iteritems()))
 
 class Protocol(p2protocol.Protocol):
-    VERSION = 1700
+    VERSION = 70030
     
     max_remembered_txs_size = 2500000
     
@@ -47,6 +47,7 @@ class Protocol(p2protocol.Protocol):
         self.send_version(
             version=self.VERSION,
             services=0,
+            time=int(time.time()),
             addr_to=dict(
                 services=0,
                 address=self.transport.getPeer().host,
@@ -59,8 +60,8 @@ class Protocol(p2protocol.Protocol):
             ),
             nonce=self.node.nonce,
             sub_version=p2pool.__version__,
-            mode=1,
-            best_share_hash=self.node.best_share_hash_func(),
+            start_height=0,
+            relay_txes=0
         )
         
         self.timeout_delayed = reactor.callLater(10, self._connect_timeout)
@@ -134,12 +135,13 @@ class Protocol(p2protocol.Protocol):
     message_version = pack.ComposedType([
         ('version', pack.IntType(32)),
         ('services', pack.IntType(64)),
+        ('time', pack.IntType(64)),
         ('addr_to', bitcoin_data.address_type),
         ('addr_from', bitcoin_data.address_type),
         ('nonce', pack.IntType(64)),
         ('sub_version', pack.VarStrType()),
-        ('mode', pack.IntType(32)), # always 1 for legacy compatibility
-        ('best_share_hash', pack.PossiblyNoneType(0, pack.IntType(256))),
+        ('start_height', pack.PossiblyNoneType(0, pack.IntType(256))),
+        ('relay_txes', pack.PossiblyNoneType(0, pack.IntType(8))),
     ])
     def handle_version(self, version, services, addr_to, addr_from, nonce, sub_version, mode, best_share_hash):
         if self.other_version is not None:
